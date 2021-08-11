@@ -1,4 +1,4 @@
-# Cards Game
+# Books API
 
 This application is an example of how to use newtypes and refined types with http4s and circe to create a CRUD for books.
 
