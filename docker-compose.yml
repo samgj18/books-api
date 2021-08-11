@@ -1,0 +1,15 @@
+version: '2.1'
+
+# Postgres and Kafka (ZooKeeper included)
+services:
+  postgres:
+    # Note: We choose 10.7 as is it is the latest version compatible with AWS Aurora Postgres
+    image: postgres:10.7-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./local-data:/docker-entrypoint-initdb.d
