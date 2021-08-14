@@ -41,11 +41,22 @@ class PostgresBookRepository[F[_]: Sync](private val xa: Transactor[F]) extends 
       .to[List]
       .transact(xa)
 
-  def updateBook(id: String, book: Book): F[Option[Book]] = ???
+  def updateBook(id: Int, name: Name, author: Author, year: Year): F[Book] = {
+    val update =
+      sql"""UPDATE books SET name = ${name.value}, author = ${author.value}, year = ${year.value} WHERE book_id = $id""".update
+        .withUniqueGeneratedKeys[Int]("book_id")
 
-  def removeBook(id: String): F[Boolean] = ???
+    val program = for {
+      id   <- update
+      item <- findQ(id).unique
+    } yield item
+    program.transact(xa)
+  }
 
-  def getBook(id: String): F[Option[Book]] = ???
+  def removeBook(id: Int): F[Boolean]                                      =
+    sql"""DELETE FROM books WHERE book_id = $id""".update.run.map(_ > 0).transact(xa)
+
+  def getBook(id: Int): F[Option[Book]] = findQ(id).option.transact(xa)
 
   private def findQ(id: Int): Query0[Book] =
     sql"""

@@ -29,7 +29,13 @@ final case class BookRoutes[F[_]: Monad: JsonDecoder: MonadThrow](
     case GET -> Root =>
       Ok(books.retrieveAll())
 
-    case req @ POST -> Root =>
+    case _ @GET -> Root / IntVar(id)    =>
+      books.getBook(id).flatMap {
+        case Some(book) => Ok(book)
+        case None       => NotFound()
+      }
+
+    case req @ POST -> Root             =>
       req.decodeR[BookSubmission] { book =>
         books
           .createBook(
@@ -42,6 +48,18 @@ final case class BookRoutes[F[_]: Monad: JsonDecoder: MonadThrow](
             case e => Conflict(e.getMessage)
           }
       }
+
+    case req @ PUT -> Root / IntVar(id) =>
+      req
+        .decodeR[BookSubmission] { book =>
+          books.updateBook(id, book.name.toDomain, book.author.toDomain, book.year.toDomain) >> Ok()
+        }
+        .recoverWith {
+          case e => NotFound(e.getMessage)
+        }
+
+    case _ @DELETE -> Root / IntVar(id) =>
+      books.removeBook(id) >> NoContent()
   }
 
   val routes: HttpRoutes[F]             = Router(
