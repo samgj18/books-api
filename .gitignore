@@ -7,11 +7,24 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+
+#History plugin
 .history
+
+#Intellij
 .cache
 .lib/
 .idea/
 .gradle/
+
+#Metals
 .bsp/
 .metals
 .vscode
+.bloop/
+
+
+#Kafka and zookeeper local files
+full-stack/
+local-data/
+events/
