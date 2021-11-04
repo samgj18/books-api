@@ -49,6 +49,7 @@ object Main extends IOApp {
     val program = for {
       config                   <- Stream.resource(Configuration.resource[IO])
       transactor               <- Stream.resource(Postgres.transactor[IO](config.postgres))
+      _                        <- Stream.eval(Postgres.runMigrations[IO](config.postgres).compile.drain)
       producer                 <- Kafka.make[IO, String, Book](config.kafka)
       producerSettings          = Kafka.producerSettings[IO, String, Book](config.kafka)
       bookRepository            = PostgresBookRepository.make[IO](transactor)
