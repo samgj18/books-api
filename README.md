@@ -16,4 +16,4 @@ The payload to create a book is the following:
 { "name": "{{string}}", "author": "{{string}}", "year": "{{int}}" }
 ```
 
-Every new registry is being pushed to Kafka, you can use [Offset Explorer](https://www.kafkatool.com/download.html) to check the partitions and the data.
+This project also use Kafka, you can read about Kafka architecture [here](http://cloudurable.com/blog/kafka-architecture/index.html), every new registry is being pushed to the application topic on the Kafka Cluster, you can use [Offset Explorer](https://www.kafkatool.com/download.html) to check the partitions and the data.
