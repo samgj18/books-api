@@ -8,6 +8,7 @@ import eu.timepit.refined.types.string.NonEmptyString
 import io.circe._
 import io.circe.refined._
 import io.estatico.newtype.macros.newtype
+import java.time.LocalDateTime
 
 object Book {
 
@@ -41,5 +42,5 @@ object Book {
   }
 
   @derive(decoder, encoder)
-  case class Book(id: Int, name: String, author: String, year: Int)
+  case class Book(id: Int, name: String, author: String, year: Int, updatedAt: LocalDateTime)
 }

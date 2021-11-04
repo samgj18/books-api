@@ -2,7 +2,7 @@ package infrastucture
 
 import cats.effect._
 import fs2.Stream
-import infrastucture.Configuration.{DbConfig, HttpConfig}
+import infrastucture.Configuration._
 import pureconfig.ConfigSource
 import pureconfig.generic.auto._
 import pureconfig.module.catseffect.loadConfigF
@@ -22,6 +22,11 @@ object Configuration {
       threadPoolSize: Int
   )
 
+  case class KafkaConfig(
+      bootstrapServers: String,
+      topic: String
+  )
+
   case class HttpConfig(
       port: Int
   )
@@ -29,5 +34,6 @@ object Configuration {
 
 case class Configuration(
     http: HttpConfig,
-    postgres: DbConfig
+    postgres: DbConfig,
+    kafka: KafkaConfig
 )

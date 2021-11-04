@@ -3,12 +3,13 @@ package repositories.interpreters
 import cats.effect.Sync
 import domain.Book._
 import doobie.implicits._
-import doobie.implicits.legacy.instant._
+import doobie.implicits.javatime._
 import doobie.util.Get
+import fs2.Stream
 import doobie.{Put, Query0, Transactor}
 import repositories.algebras.BookRepository
 
-import java.time.{Instant, ZoneId, ZonedDateTime}
+import java.time.{Instant, ZoneId, ZonedDateTime, LocalDateTime}
 
 object PostgresBookRepository {
   def make[F[_]: Sync](xa: Transactor[F]): BookRepository[F] =
@@ -34,9 +35,15 @@ class PostgresBookRepository[F[_]: Sync](private val xa: Transactor[F]) extends 
     program.transact(xa)
   }
 
-  def retrieveAll(): F[List[Book]]                                =
+  def retrieveByDate(date: LocalDateTime): Stream[F, Book]        =
     sql"""
-    SELECT * FROM books"""
+    SELECT * FROM books
+    WHERE updated_at > ${date}
+    """.query[Book].stream.transact(xa)
+
+  def retrieveAll(): F[List[Book]]                                         =
+    sql"""
+    SELECT * FROM books""" //Always explicitly name what's being selected
       .query[Book]
       .to[List]
       .transact(xa)

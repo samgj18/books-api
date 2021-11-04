@@ -19,6 +19,7 @@ libraryDependencies ++= Seq(
   "io.circe"              %% "circe-core"             % "0.14.1",
   "io.circe"              %% "circe-generic"          % "0.14.1",
   "io.circe"              %% "circe-refined"          % "0.14.1",
+  "com.github.fd4s"       %% "fs2-kafka"              % "2.2.0",
   "com.github.pureconfig" %% "pureconfig-cats-effect" % "0.16.0",
   "com.github.pureconfig" %% "pureconfig"             % "0.16.0",
   "eu.timepit"            %% "refined"                % "0.9.25",
