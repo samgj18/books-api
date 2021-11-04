@@ -6,11 +6,14 @@ This application is an example of how to use newtypes and refined types with htt
 
 ### How to use?
 
-- Run ```docker-compose up -d```, it'll start the postgres database we will use to store our books.
-- Run ```sbt ~reStart```, it'll spin up the server and will reload whenever a file changes.
-- 
+- Run `docker-compose up -d`, it'll start the postgres database we will use to store our books.
+- Run `sbt` and the `~reStart`, it'll spin up the server and will reload whenever a file changes.
+-
 
 The payload to create a book is the following:
+
 ```json
-{"name": "{{string}}", "author": "{{string}}", "year": "{{int}}"}
+{ "name": "{{string}}", "author": "{{string}}", "year": "{{int}}" }
 ```
+
+Every new registry is being pushed to Kafka, you can use [Offset Explorer](https://www.kafkatool.com/download.html) to check the partitions and the data.
