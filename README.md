@@ -1,5 +1,8 @@
 # Books API
 
+<a href="https://typelevel.org/cats/"><img src="https://typelevel.org/cats/img/cats-badge-tiny.png" alt="Cats friendly" /></a>
+
+
 This application is an example of how to use newtypes and refined types with http4s and circe to create a CRUD for books.
 
 ##### Is written in a pure functional way using [cats](https://typelevel.org/cats-effect/), [fs2](https://fs2.io/#/), [circe](https://circe.github.io/circe/), [derevo](https://github.com/tofu-tf/derevo), [newtypes](https://github.com/estatico/scala-newtype), [refined](https://github.com/fthomas/refined), [doobie](https://tpolecat.github.io/doobie/) and [http4s](https://github.com/http4s/http4s/blob/main/examples/blaze/src/main/scala/com/example/http4s/blaze/BlazeWebSocketExample.scala)
